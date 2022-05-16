@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+</head>
+<body>
+    <form id="formulario" action="POST">
+        <input type="text" name="name" placeholder="nombre">
+        <input type="email" name="email" placeholder="email">
+        <input type="password" name="password" placeholder="password" autocomplete="false">
+        <button type="submit">Enviar</button>
+    </form>
+
+    <div class="res"></div>
+
+    <script>
+        const formulario = document.querySelector('#formulario')
+        formulario.addEventListener('submit', (e)=>{
+            e.preventDefault()
+            fetch("http://localhost:4000/api/signup",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    name:formulario.name.value,
+                    email: formulario.email.value,
+                    password:formulario.password.value
+                })
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                console.log(data)
+                const res = document.querySelector('.res')
+                if(data.status === 201)res.innerHTML = "Usuario creado correctamente"
+                if(data.status === 400)res.innerHTML = data.message
+            })
+            .catch(error=>console.log(error))
+        })
+    </script>
+</body>
+</html>

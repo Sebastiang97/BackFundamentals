@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Inicio</title>
+    <link rel="stylesheet" href="/static/index.css">
+    <!-- <style>
+        h1{
+            font-size: 100px;
+        }
+    </style> -->
+</head>
+<body>
+    <h1>Hola</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, cupiditate?</p>
+    <img src="https://images.unsplash.com/photo-1651052003819-ec2abaa445f7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80" alt="Imagen">
+    <img src="/static/foto.jpeg" alt="Foto de prueba">
+
+    <script>
+        // Asíncrona
+        // Async
+        fetch("/users") // Inicio
+        .then(function(resultado){
+            return resultado.json()
+        })//Resultado exitoso
+        .then(function(data){
+            console.log(data)
+        })
+        .catch(function(error){
+            console.log(error)
+        })//Resultado fallido
+
+
+        // Gestión de promesas con Async/await
+        async function request(){
+            try{
+                const resultado = await fetch("/users")
+                const data = await resultado.json()
+                return data
+            }catch(error){
+                console.log(error)
+            }
+        }
+
+        request()
+
+
+    </script>
+</body>
+</html>
