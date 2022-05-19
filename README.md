@@ -13,7 +13,7 @@ Añade las tablas Users, events y events_users
 En este orden 
 
  CREATE TABLE users ( 
- `id` INT(30) NOT NULL ,
+ `id` INT(30) AUTO_INCREMENT,
  `name` VARCHAR(100) NOT NULL , 
  `email` VARCHAR(100) NOT NULL , 
  `password` VARCHAR(100) NOT NULL , 
