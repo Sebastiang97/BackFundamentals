@@ -29,7 +29,6 @@ En este orden
      `hora_inicio` TIME NOT NULL , 
      `hora_final` TIME NOT NULL ,
      `organizer_id` INT(30) NOT NULL ,
-     `organizer_name` INT(30) NOT NULL ,
      `titulo` VARCHAR(100) NOT NULL , 
      `descripcion` VARCHAR(200) NOT NULL , 
      `invitados` VARCHAR(100) NOT NULL , 
@@ -42,9 +41,7 @@ En este orden
  CREATE TABLE events_users (
      id INT(30) NOT NULL AUTO_INCREMENT ,
      event_id INT(30) NOT NULL,
-     organizer_id INT(30) NOT NULL,
-     organizer_name INT(30) NOT NULL,
-     guest_id INT(30) UNIQUE NOT NULL,
+     guest_id INT(30) NOT NULL,
      guest_name INT(30) NOT NULL,
      PRIMARY KEY (id),
      FOREIGN KEY (event_id) REFERENCES events (id),
