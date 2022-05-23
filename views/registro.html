@@ -1,45 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-</head>
-<body>
-    <form id="formulario" action="POST">
-        <input type="text" name="name" placeholder="nombre">
-        <input type="email" name="email" placeholder="email">
-        <input type="password" name="password" placeholder="password" autocomplete="false">
-        <button type="submit">Enviar</button>
-    </form>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Organizer App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="bg-cyan-300 min-h-screen flex flex-col">
+      <div
+        class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2"
+      >
+        <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+          <h1 class="mb-8 text-3xl text-center">Registarme</h1>
+          <form id="formulario">
+            <input
+              type="text"
+              class="block border border-grey-light w-full p-3 rounded mb-4"
+              name="name"
+              placeholder="Nombre Completo"
+            />
 
-    <div class="res"></div>
+            <input
+              type="text"
+              class="block border border-grey-light w-full p-3 rounded mb-4"
+              name="email"
+              placeholder="Correo"
+            />
+
+            <input
+              type="password"
+              class="block border border-grey-light w-full p-3 rounded mb-4"
+              name="password"
+              placeholder="Contraseña"
+            />
+            <input
+              type="password"
+              class="block border border-grey-light w-full p-3 rounded mb-4"
+              name="confirm_password"
+              placeholder="Confirmar Contraseña"
+            />
+
+            <button
+              type="submit"
+              class="w-full text-center py-3 rounded bg-green-400 text-white hover:bg-green-dark focus:outline-none my-1"
+            >
+              Crear Cuenta
+            </button>
+          </form>
+        </div>
+
+        <div class="text-grey-dark mt-6">
+          ¿Tienes una cuenta?
+          <a
+            class="no-underline border-b border-blue-700 text-blue-700"
+            href="/login"
+          >
+            Ingresar </a
+          >.
+        </div>
+        <div class="res"></div>
+      </div>
+    </div>
 
     <script>
-        const formulario = document.querySelector('#formulario')
-        formulario.addEventListener('submit', (e)=>{
-            e.preventDefault()
-            fetch("http://localhost:4000/api/signup",{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                    name:formulario.name.value,
-                    email: formulario.email.value,
-                    password:formulario.password.value
-                })
-            })
-            .then(res=>res.json())
-            .then(data=>{
-                console.log(data)
-                const res = document.querySelector('.res')
-                if(data.status === 201)res.innerHTML = "Usuario creado correctamente"
-                if(data.status === 400)res.innerHTML = data.message
-            })
-            .catch(error=>console.log(error))
+      const formulario = document.querySelector('#formulario')
+      formulario.addEventListener('submit', (e) => {
+        e.preventDefault()
+        fetch('http://localhost:4000/api/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: formulario.name.value,
+            email: formulario.email.value,
+            password: formulario.password.value,
+          }),
         })
+          .then((res) => res.json())
+          .then((data) => {
+            const res = document.querySelector('.res')
+            if (data.status === 200) {
+              const user = data.user
+              console.log(user)
+              localStorage.setItem('user', JSON.stringify(user))
+              location.href = '/'
+            }
+            if (data.status === 400) {
+              res.innerHTML = `
+                  <div class="container mx-auto">
+                      <div class="w-screen max-w-lg bg-red-200 mx-auto mt-6 p-2">
+                          <div class="flex space-x-2">
+                              <svg class="w-6 h-6 stroke-red-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                              </svg>
+                              <p class="text-red-900 font-semibold">Error a realizar proceso de registro</p>
+                          </div>
+                          <p class="ml-8 text-red-800">${data.message}</p>
+                      </div>
+                  </div>
+              `
+            }
+          })
+          .catch((error) => console.log(error))
+      })
     </script>
-</body>
+  </body>
 </html>

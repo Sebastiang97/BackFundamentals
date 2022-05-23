@@ -4,7 +4,7 @@
 
 para instalar las dependencia necesarias
 
-npm i 
+npm i
 
 cree el documento .env y asigne las variables de acuerdo a su base de datos, tiene un ejemplo en el documento .en.example, cualquier error revise el documento /libs/database.js
 
@@ -54,9 +54,5 @@ En este orden
 
 ## Ejecuta el proyecto
 
-para ejecutar el proyecto 
-npm run dev 
-
-
-
-
+para ejecutar el proyecto
+npm run dev
